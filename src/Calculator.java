@@ -4,26 +4,31 @@ public class Calculator {
 
     public static void main(String[] args) {
 
-        Circle circle = new Circle(10);
+        Shape circle = new Circle(10);
 
-        Rectangle rectangle = new Rectangle();
-        rectangle.setDimensions(4,7);
+        Shape rectangle = new Rectangle(5,8);
+        Shape square = new Rectangle(7,7);
 
-        boolean isSquare = true;
-
-
-        Triangle triangle = new Triangle(10,20,30);
+        Shape triangle = new Triangle(10,20,30);
 
         ArrayList<Shape> shapeObjects = new ArrayList<>();
         shapeObjects.add(circle);
         shapeObjects.add(rectangle);
+        shapeObjects.add(square);
         shapeObjects.add(triangle);
 
 
         System.out.println("");
         for(Shape s : shapeObjects){
-            System.out.println("Area of "+s.getClass().getCanonicalName()+" is : "+s.calculateArea());
-            System.out.println("Perimeter of "+ s.getClass().getCanonicalName() +" is : "+s.calculatePerimeter());
+
+            if(s.shape != null && s.shape.equalsIgnoreCase("Square")){
+                System.out.println("Area of Square is : "+s.calculateArea());
+                System.out.println("Perimeter of Square is : "+s.calculatePerimeter());
+            }else{
+                System.out.println("Area of "+s.getClass().getCanonicalName()+" is : "+s.calculateArea());
+                System.out.println("Perimeter of "+ s.getClass().getCanonicalName() +" is : "+s.calculatePerimeter());
+            }
+
             System.out.println("--------------------------");
         }
 

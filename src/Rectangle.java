@@ -4,7 +4,11 @@ public class Rectangle extends Shape{
     int width;
 
     Rectangle(int length, int width){
-        if(length)
+        if(length == width){
+            setDimensions(length);
+        }else{
+            setDimensions(length,width);
+        }
     }
     @Override
     double calculateArea(){
@@ -22,8 +26,8 @@ public class Rectangle extends Shape{
     }
 
     void setDimensions(int value){
-        System.out.println("Square");
         this.length = value;
         this.width = value;
+        super.shape = "Square";
     }
 }
