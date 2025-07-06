@@ -1,0 +1,4 @@
+A,100,Snacks,[B,C,D]
+B,500,Taxi,[C,D]
+D,300,Bus,[A,B]
+C,800,Museum Ticket,[A,B,D]
