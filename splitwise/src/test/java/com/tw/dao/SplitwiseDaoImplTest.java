@@ -34,12 +34,22 @@ class SplitwiseDaoImplTest {
     }
 
     @Test
+    void testCreateBalanceSheet() {
+        assertEquals(4, splitService.createBalanceSheet(splitwiseList).size());
+    }
+
+    @Test
+    void testCreateBalanceSheetFailure() {
+        assertNull(splitService.createBalanceSheet(null));
+    }
+
+    @Test
     void testSplitBillAndPrintSuccess() {
-        assertTrue(splitService.splitBillAndPrint(splitwiseList));
+        assertTrue(splitService.showExpenses(splitService.createBalanceSheet(splitService.readInputFromResource(FILE_PATH))));
     }
 
     @Test
     void testSplitBillAndPrintFailure() {
-        assertFalse(splitService.splitBillAndPrint(null));
+        assertFalse(splitService.showExpenses(null));
     }
 }

@@ -14,6 +14,7 @@ public class SplitwiseMain {
         SplitwiseDao splitDao = new SplitwiseDaoImpl();
         SplitwiseService splitService = new SplitwiseServiceImpl(splitDao);
 
-        splitService.splitBillAndPrint(splitService.readInputFromResource(FILE_PATH));
+        splitService.showExpenses(splitService.createBalanceSheet(splitService.readInputFromResource(FILE_PATH)));
+
     }
 }

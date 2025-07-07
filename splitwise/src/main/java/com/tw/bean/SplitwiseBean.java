@@ -16,6 +16,7 @@ public class SplitwiseBean {
         this.amountSplitBy = amountSplitBy;
     }
 
+
     @Override
     public String toString() {
         return "SplitwiseBean{" +
@@ -26,16 +27,13 @@ public class SplitwiseBean {
                 '}';
     }
 
+
     public String getName() {
         return name;
     }
 
     public double getMoneySpent() {
         return moneySpent;
-    }
-
-    public String getExpenseDescription() {
-        return expenseDescription;
     }
 
     public List<String> getAmountSplitBy() {

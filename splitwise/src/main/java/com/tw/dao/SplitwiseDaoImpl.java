@@ -5,8 +5,7 @@ import com.tw.bean.SplitwiseBean;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -33,19 +32,45 @@ public class SplitwiseDaoImpl implements SplitwiseDao {
         return splitwiseList;
     }
 
-    @Override
-    public boolean splitBillAndPrint(List<SplitwiseBean> splitwiseList) {
-
+    public Map<String, Map<String, Double>> createBalanceSheet(List<SplitwiseBean> splitwiseList) {
         try {
+            Map<String, Map<String, Double>> balances = new HashMap<>();
             for (SplitwiseBean sb : splitwiseList) {
                 double moneyAfterSplit = Math.round(sb.getMoneySpent() / (sb.getAmountSplitBy().size() + 1));
-                sb.getAmountSplitBy().forEach((s) -> System.out.println(s + " pays " + sb.getName() + " Rs." + moneyAfterSplit + " For " + sb.getExpenseDescription()));
-                System.out.println("----------------------------------");
+                for (String splitBy : sb.getAmountSplitBy()) {
+                    balances.computeIfAbsent(sb.getName(), _ -> new HashMap<>())
+                            .merge(splitBy, moneyAfterSplit, Double::sum);
+                }
+
             }
+            return balances;
+        } catch (Exception e) {
+            logger.log(Level.INFO, e.getMessage(), e);
+            return null;
+        }
+
+    }
+
+    public boolean showExpenses(Map<String, Map<String, Double>> balances) {
+        try {
+            System.out.println("----- Expenses -----");
+            for (Map.Entry<String, Map<String, Double>> paidBy : balances.entrySet()) {
+                String paidByUser = paidBy.getKey();
+                for (Map.Entry<String, Double> splitByEntry : paidBy.getValue().entrySet()) {
+                    String debtor = splitByEntry.getKey();
+                    double amountToBePaid = splitByEntry.getValue();
+
+                    System.out.println(debtor + " pays " + paidByUser + " " + Math.round(amountToBePaid));
+                }
+            }
+            System.out.println("------------------------");
             return true;
         } catch (Exception e) {
             logger.log(Level.INFO, e.getMessage(), e);
             return false;
         }
+
     }
+
+
 }
